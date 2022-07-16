@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(GridPosition))]
 public class PlayerController : MonoBehaviour
 {
+    public TileGridReference tileGridReference;
+
     private PlayerControls controls;
 
     private GridPosition gridPosition;
@@ -44,8 +46,13 @@ public class PlayerController : MonoBehaviour
     {
         if ((syncGridPosition == null || syncGridPosition.Done) && queuedMove is Vector2Int qm)
         {
-            gridPosition.Position += qm;
+            var newPos = gridPosition.Position + qm;
             queuedMove = null;
+
+            if (tileGridReference.Current.IsTileEmpty(newPos))
+            {
+                gridPosition.Position = newPos;
+            }
         }
     }
 

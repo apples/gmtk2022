@@ -93,6 +93,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1321545015938411868}
   - component: {fileID: 292261599868635844}
+  - component: {fileID: 3818204596547824680}
+  - component: {fileID: 3818204596547824681}
   m_Layer: 0
   m_Name: PlayerDice
   m_TagString: Untagged
@@ -133,6 +135,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f598aeab6bc90a45a061edd0acd4d64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileGridReference: {fileID: 11400000, guid: 078dab54d9cc2a14496ca2a2930740d2, type: 2}
+  position: {x: 0, y: 0}
+--- !u!114 &3818204596547824680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321545015938411871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 411d960d08747c6478bc0f39757ba7ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mode: 0
+  speed: 2
+--- !u!114 &3818204596547824681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321545015938411871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5432cb563891b1d41bc26b022b148518, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileGridReference: {fileID: 0}
 --- !u!1 &3970243222274838494
 GameObject:
   m_ObjectHideFlags: 0

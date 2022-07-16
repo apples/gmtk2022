@@ -31,18 +31,16 @@ public class TileGrid : MonoBehaviour
         generator.Generate(this);
     }
 
-    public bool TryGetTileData(Vector2Int coord, out TileData tileData)
+    public TileData GetTileData(Vector2Int coord)
     {
         var (chunkCoord, index) = BreakCoords(coord);
 
         if (chunks.TryGetValue(chunkCoord, out var chunk))
         {
-            tileData = chunk.tiles[index].tileData;
-            return true;
+            return chunk.tiles[index].tileData;
         }
 
-        tileData = null;
-        return false;
+        return null;
     }
 
     public void SetTileData(Vector2Int coord, TileData tileData)
@@ -143,6 +141,23 @@ public class TileGrid : MonoBehaviour
         {
             chunk.tiles[index].occupant = null;
         }
+    }
+
+    public bool IsTileEmpty(Vector2Int coord)
+    {
+        var tileData = GetTileData(coord);
+
+        if (tileData == null || tileData.type == TileType.Wall)
+        {
+            return false;
+        }
+
+        if (GetOccupant(coord) != null)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     private (Vector2Int, int) BreakCoords(Vector2Int coord)

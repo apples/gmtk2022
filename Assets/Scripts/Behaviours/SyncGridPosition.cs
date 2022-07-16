@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 [RequireComponent(typeof(GridPosition))]
 public class SyncGridPosition : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class SyncGridPosition : MonoBehaviour
 
     public Mode mode;
     public float speed;
+
+    [SerializeField]
+    private bool updateInEditMode;
 
     private GridPosition gridPosition;
     private float remainingTime;
@@ -33,6 +37,13 @@ public class SyncGridPosition : MonoBehaviour
     {
         if (gridPosition.Position != prevGridPosition)
         {
+            if (!updateInEditMode && !Application.isPlaying)
+            {
+                prevGridPosition = gridPosition.Position;
+                this.transform.position = new Vector3(gridPosition.Position.x, 0, gridPosition.Position.y);
+                remainingTime = 0f;
+            }
+
             if (Vector2Int.Distance(gridPosition.Position, prevGridPosition) == 1f)
             {
                 prevGridPosition = gridPosition.Position;
@@ -43,9 +54,9 @@ public class SyncGridPosition : MonoBehaviour
             }
             else
             {
+                prevGridPosition = gridPosition.Position;
                 remainingTime = 0f;
                 to = new Vector3(gridPosition.Position.x, 0, gridPosition.Position.y);
-                prevGridPosition = gridPosition.Position;
                 this.transform.position = to;
             }
         }

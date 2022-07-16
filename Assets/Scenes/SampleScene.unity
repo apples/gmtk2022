@@ -411,16 +411,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 292261599868635844, guid: 8c3155461992b63498126c1aa026a703, type: 3}
-      propertyPath: tileGridReference
-      value: 
-      objectReference: {fileID: 11400000, guid: 078dab54d9cc2a14496ca2a2930740d2, type: 2}
+      propertyPath: position.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 292261599868635844, guid: 8c3155461992b63498126c1aa026a703, type: 3}
+      propertyPath: position.y
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 1321545015938411868, guid: 8c3155461992b63498126c1aa026a703, type: 3}
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1321545015938411868, guid: 8c3155461992b63498126c1aa026a703, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1321545015938411868, guid: 8c3155461992b63498126c1aa026a703, type: 3}
       propertyPath: m_LocalPosition.y
@@ -428,7 +432,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1321545015938411868, guid: 8c3155461992b63498126c1aa026a703, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1321545015938411868, guid: 8c3155461992b63498126c1aa026a703, type: 3}
       propertyPath: m_LocalRotation.w
@@ -462,37 +466,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerDice
       objectReference: {fileID: 0}
+    - target: {fileID: 3818204596547824681, guid: 8c3155461992b63498126c1aa026a703, type: 3}
+      propertyPath: tileGridReference
+      value: 
+      objectReference: {fileID: 11400000, guid: 078dab54d9cc2a14496ca2a2930740d2, type: 2}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c3155461992b63498126c1aa026a703, type: 3}
---- !u!1 &3818204596547824679 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1321545015938411871, guid: 8c3155461992b63498126c1aa026a703, type: 3}
-  m_PrefabInstance: {fileID: 3818204596547824678}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3818204596547824680
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3818204596547824679}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 411d960d08747c6478bc0f39757ba7ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mode: 0
-  speed: 2
---- !u!114 &3818204596547824681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3818204596547824679}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5432cb563891b1d41bc26b022b148518, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
