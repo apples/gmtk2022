@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(GridPosition))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, ICharacterBehavior
 {
     public TileGridReference tileGridReference;
 
@@ -15,6 +15,14 @@ public class PlayerController : MonoBehaviour
     private SyncGridPosition syncGridPosition;
 
     private Vector2Int? queuedMove;
+
+    private enum Status
+    {
+        WaitingForInput,
+        Moving,
+    }
+
+    private Status status;
 
     void Awake()
     {
@@ -44,16 +52,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if ((syncGridPosition == null || syncGridPosition.Done) && queuedMove is Vector2Int qm)
-        {
-            var newPos = gridPosition.Position + qm;
-            queuedMove = null;
-
-            if (tileGridReference.Current.IsTileEmpty(newPos))
-            {
-                gridPosition.Position = newPos;
-            }
-        }
     }
 
     private void controls_PlayerDice_MoveLeft_performed(InputAction.CallbackContext obj) => Move(Vector2Int.left);
@@ -77,5 +75,50 @@ public class PlayerController : MonoBehaviour
         {
             queuedMove = null;
         }
+    }
+
+    public void BeginTurn()
+    {
+        status = Status.WaitingForInput;
+    }
+
+    public TurnResult PerformTurn()
+    {
+        switch (status)
+        {
+            case Status.WaitingForInput:
+                return WaitingForInput();
+            case Status.Moving:
+                return Moving();
+            default:
+                throw new InvalidOperationException($"Unknown status {status}");
+        }
+    }
+
+    private TurnResult WaitingForInput()
+    {
+        if (queuedMove is Vector2Int qm)
+        {
+            var newPos = gridPosition.Position + qm;
+            queuedMove = null;
+
+            if (tileGridReference.Current.IsTileEmpty(newPos))
+            {
+                gridPosition.Position = newPos;
+                status = Status.Moving;
+            }
+        }
+
+        return TurnResult.Wait;
+    }
+
+    private TurnResult Moving()
+    {
+        if (syncGridPosition == null || syncGridPosition.Done)
+        {
+            return TurnResult.EndTurn;
+        }
+
+        return TurnResult.Wait;
     }
 }
