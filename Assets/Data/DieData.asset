@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b1dc952b3ca8554999b9b1c7b2d39bb, type: 3}
+  m_Name: DieData
+  m_EditorClassIdentifier: 
+  attackTexture: {fileID: 2800000, guid: b62664de850d2fd4395f79726deba50a, type: 3}
+  defendTexture: {fileID: 2800000, guid: d991a4febb497e34bb557546066c2352, type: 3}
+  missTexture: {fileID: 2800000, guid: 122d145e20285574e8478e55417a6231, type: 3}
+  faces:
+  - effect: 0
+  - effect: 0
+  - effect: 1
+  - effect: 1
+  - effect: 0
+  - effect: 2

@@ -28,6 +28,9 @@ public class SpriteShadow : MonoBehaviour
 
     void OnValidate()
     {
-        spriteRenderer.shadowCastingMode = mode;
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.shadowCastingMode = mode;
+        }
     }
 }

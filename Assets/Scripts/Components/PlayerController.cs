@@ -9,6 +9,11 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
 {
     public TileGridReference tileGridReference;
 
+    public DieData dieData;
+
+    [SerializeField]
+    private List<MeshRenderer> faceMeshRenderers;
+
     private PlayerControls controls;
 
     private GridPosition gridPosition;
@@ -24,6 +29,8 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
 
     private Status status;
 
+    private DieState dieState;
+
     void Awake()
     {
         gridPosition = GetComponent<GridPosition>();
@@ -38,6 +45,24 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
         controls.PlayerDice.MoveDown.canceled += this.controls_PlayerDice_MoveDown_canceled;
         controls.PlayerDice.MoveLeft.canceled += this.controls_PlayerDice_MoveLeft_canceled;
         controls.PlayerDice.MoveRight.canceled += this.controls_PlayerDice_MoveRight_canceled;
+
+        dieState = new DieState(dieData);
+
+        for (var i = 0; i < 6; ++i)
+        {
+            switch (dieState.faces[i].effect)
+            {
+                case DieFaceEffect.Attack:
+                    faceMeshRenderers[i].material.mainTexture = dieData.attackTexture;
+                    break;
+                case DieFaceEffect.Shield:
+                    faceMeshRenderers[i].material.mainTexture = dieData.defendTexture;
+                    break;
+                case DieFaceEffect.Miss:
+                    faceMeshRenderers[i].material.mainTexture = dieData.missTexture;
+                    break;
+            }
+        }
     }
 
     void OnEnable()
@@ -106,6 +131,18 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
             {
                 gridPosition.Position = newPos;
                 status = Status.Moving;
+
+                Dir? dir =
+                    qm == Vector2Int.up ? Dir.Up :
+                    qm == Vector2Int.right ? Dir.Right :
+                    qm == Vector2Int.down ? Dir.Down :
+                    qm == Vector2Int.left ? Dir.Left :
+                    null;
+
+                if (dir is Dir d)
+                {
+                    dieState.Spin(d);
+                }
             }
         }
 
