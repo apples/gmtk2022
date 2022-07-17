@@ -37,7 +37,7 @@ public class BatCharacterBehavior : CharacterBehavior
         Span<Vector2Int> possibleDirs = stackalloc Vector2Int[] { Vector2Int.left, Vector2Int.right, Vector2Int.up, Vector2Int.down };
         var dir = possibleDirs[Random.Range(0, 4)];
 
-        if (Controller.TileGrid.IsTileEmpty(Controller.Position + dir))
+        if (Controller.TileGrid.IsTileEmpty(Controller.Position + dir, out var occupant))
         {
             Controller.Position += dir;
             status = Status.Moving;

@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
 
     private GridPosition gridPosition;
     private SyncGridPosition syncGridPosition;
+    private DieAttackSwing dieAttackSwing;
 
     private Vector2Int? queuedMove;
 
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
     {
         WaitingForInput,
         Moving,
+        Attacking,
     }
 
     private Status status;
@@ -41,6 +43,8 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
     {
         gridPosition = GetComponent<GridPosition>();
         syncGridPosition = GetComponent<SyncGridPosition>();
+        dieAttackSwing = GetComponent<DieAttackSwing>();
+
         controls = new PlayerControls();
         controls.PlayerDice.MoveUp.performed += this.controls_PlayerDice_MoveUp_performed;
         controls.PlayerDice.MoveDown.performed += this.controls_PlayerDice_MoveDown_performed;
@@ -121,6 +125,8 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
                 return WaitingForInput();
             case Status.Moving:
                 return Moving();
+            case Status.Attacking:
+                return Attacking();
             default:
                 throw new InvalidOperationException($"Unknown status {status}");
         }
@@ -138,7 +144,7 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
 
             var newPos = gridPosition.Position + qm;
 
-            if (tileGridReference.Current.IsTileEmpty(newPos))
+            if (tileGridReference.Current.IsTileEmpty(newPos, out var occupant))
             {
                 gridPosition.Position = newPos;
                 status = Status.Moving;
@@ -155,9 +161,60 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
                     dieState.Spin(d);
                 }
             }
+
+            if (occupant != null && occupant.GetComponent<Health>() is Health occupantHealth)
+            {
+                if (ConsumeTrail(out var stats))
+                {
+                    if (stats.attack > 0)
+                    {
+                        occupantHealth.CurrentHealth -= stats.attack;
+                    }
+                }
+
+                dieAttackSwing.Play(qm);
+
+                status = Status.Attacking;
+            }
         }
 
         return TurnResult.Wait;
+    }
+
+    private bool ConsumeTrail(out TrailStats trailStats)
+    {
+        trailStats = default;
+
+        if (trail.Count == 0) return false;
+
+        foreach (var trailingFace in trail)
+        {
+            switch (trailingFace.FaceEffect)
+            {
+                case DieFaceEffect.Attack:
+                    ++trailStats.attack;
+                    break;
+                case DieFaceEffect.Shield:
+                    ++trailStats.shields;
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        DestroyTrail();
+
+        return true;
+    }
+
+    private void DestroyTrail()
+    {
+        foreach (var trailingFace in trail)
+        {
+            Destroy(trailingFace.gameObject);
+        }
+        trail.Clear();
+        trailMoves.Clear();
     }
 
     private TurnResult Moving()
@@ -165,6 +222,16 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
         if (syncGridPosition == null || syncGridPosition.Done)
         {
             UpdateTrail();
+            return TurnResult.EndTurn;
+        }
+
+        return TurnResult.Wait;
+    }
+
+    private TurnResult Attacking()
+    {
+        if (dieAttackSwing == null || dieAttackSwing.Done)
+        {
             return TurnResult.EndTurn;
         }
 
@@ -197,12 +264,7 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
 
         if (trail[trail.Count - 1].FaceEffect == DieFaceEffect.Miss)
         {
-            foreach (var trailingFace in trail)
-            {
-                Destroy(trailingFace.gameObject);
-            }
-            trail.Clear();
-            trailMoves.Clear();
+            DestroyTrail();
         }
     }
 
@@ -269,5 +331,11 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
         }
 
         return true;
+    }
+
+    private struct TrailStats
+    {
+        public int attack;
+        public int shields;
     }
 }

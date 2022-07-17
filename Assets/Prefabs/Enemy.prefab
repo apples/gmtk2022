@@ -110,6 +110,8 @@ GameObject:
   - component: {fileID: 6607950631546995318}
   - component: {fileID: 6607950631546995317}
   - component: {fileID: 6607950631546995208}
+  - component: {fileID: 6342297418857238409}
+  - component: {fileID: 2990887595274117371}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -130,6 +132,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6607950631266817792}
+  - {fileID: 3773241288461718665}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -161,6 +164,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mode: 0
   speed: 10
+  isDie: 0
+  dieFaces: []
+  diePivot: {fileID: 0}
+  dieParent: {fileID: 0}
   updateInEditMode: 0
 --- !u!114 &6607950631546995208
 MonoBehaviour:
@@ -177,3 +184,79 @@ MonoBehaviour:
   characterControllerList: {fileID: 11400000, guid: 29388d9115467b84ca0038fab1257267, type: 2}
   characterBehaviorData: {fileID: 11400000, guid: 7bb17b2cd8d47c542a88cd440752ccf5, type: 2}
   tileGridReference: {fileID: 11400000, guid: 078dab54d9cc2a14496ca2a2930740d2, type: 2}
+--- !u!114 &6342297418857238409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6607950631546995316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3944b72da62f1f848867552f84579736, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 3
+  onChange:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2990887595274117371}
+        m_TargetAssemblyTypeName: HealthBar, Assembly-CSharp
+        m_MethodName: Refresh
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2990887595274117371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6607950631546995316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28e8c794d36015340b384216118b0fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heartFullSprite: {fileID: 2045819349, guid: e314c4506c347ba4baa3df52ea6e6d95, type: 3}
+  heartEmptySprite: {fileID: -1060950497, guid: e314c4506c347ba4baa3df52ea6e6d95, type: 3}
+  heartPrefab: {fileID: 6388920005540719159, guid: 658aae27573deb4439ab8d3ac0cb46f2, type: 3}
+  heartSpacing: 0.3125
+  heartOrigin: {fileID: 3773241288461718665}
+--- !u!1 &7360292399978008687
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3773241288461718665}
+  m_Layer: 0
+  m_Name: HealthOrigin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3773241288461718665
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7360292399978008687}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.6875, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6607950631546995319}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -143,16 +143,17 @@ public class TileGrid : MonoBehaviour
         }
     }
 
-    public bool IsTileEmpty(Vector2Int coord)
+    public bool IsTileEmpty(Vector2Int coord, out GridPosition occupant)
     {
         var tileData = GetTileData(coord);
+        occupant = GetOccupant(coord);
 
         if (tileData == null || tileData.type == TileType.Wall)
         {
             return false;
         }
 
-        if (GetOccupant(coord) != null)
+        if (occupant != null)
         {
             return false;
         }

@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 3818204596547824680}
   - component: {fileID: 3818204596547824681}
   - component: {fileID: 8612776083894271701}
+  - component: {fileID: 3508665940722423644}
   m_Layer: 0
   m_Name: PlayerDice
   m_TagString: Untagged
@@ -202,6 +203,28 @@ MonoBehaviour:
   characterControllerList: {fileID: 11400000, guid: 29388d9115467b84ca0038fab1257267, type: 2}
   characterBehaviorData: {fileID: 11400000, guid: 92aa0c5f1e2105e428470f2d90279700, type: 2}
   tileGridReference: {fileID: 11400000, guid: 078dab54d9cc2a14496ca2a2930740d2, type: 2}
+--- !u!114 &3508665940722423644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321545015938411871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e30568b8d46df4aaeb6f4449e8d5e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+  dieFaces:
+  - {fileID: 3970243222274838494}
+  - {fileID: 178017076558598550}
+  - {fileID: 7522391809299678465}
+  - {fileID: 5697214735875002656}
+  - {fileID: 7669276042638144996}
+  - {fileID: 6234571224418714837}
+  diePivot: {fileID: 6456971878369739554}
+  dieParent: {fileID: 1321545015938411868}
 --- !u!1 &3970243222274838494
 GameObject:
   m_ObjectHideFlags: 0
