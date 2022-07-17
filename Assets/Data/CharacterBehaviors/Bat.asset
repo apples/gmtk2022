@@ -9,6 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7aa70b573fe4864291754a40ae2bfd2, type: 3}
+  m_Script: {fileID: 11500000, guid: 956eca6972f3f5c498ac27ec19c8bb28, type: 3}
   m_Name: Bat
   m_EditorClassIdentifier: 
+  turnSequence: 0000000001000000

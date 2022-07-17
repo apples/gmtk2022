@@ -161,6 +161,11 @@ public class TileGrid : MonoBehaviour
         return true;
     }
 
+    public bool IsTileEmpty(Vector2Int coord)
+    {
+        return IsTileEmpty(coord, out var occupant);
+    }
+
     private (Vector2Int, int) BreakCoords(Vector2Int coord)
     {
         var chunkCoord = new Vector2Int(coord.x >> chunk_pow, coord.y >> chunk_pow);
