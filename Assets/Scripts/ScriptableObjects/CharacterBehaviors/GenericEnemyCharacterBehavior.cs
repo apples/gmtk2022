@@ -142,7 +142,17 @@ public class GenericEnemyCharacterBehavior : CharacterBehavior
 
         Controller.enemySprite.transform.SetParent(Controller.transform, true);
 
-        attackTarget.GetComponent<Health>().CurrentHealth -= 1;
+        if (attackTarget.GetComponent<PlayerController>() is PlayerController pc)
+        {
+            if (!pc.ConsumeShield())
+            {
+                attackTarget.GetComponent<Health>().CurrentHealth -= 1;
+            }
+        }
+        else
+        {
+            attackTarget.GetComponent<Health>().CurrentHealth -= 1;
+        }
 
         return TurnResult.EndTurn;
     }

@@ -8,7 +8,7 @@ public class PlayerDataManager : MonoBehaviour
 
     public int CurrentLevelReached { get; set; }
 
-    void Start()
+    void Awake()
     {
         if (Singleton != null)
         {

@@ -226,6 +226,21 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
         }
     }
 
+    public bool ConsumeShield()
+    {
+        for (var i = 0; i < trail.Count; ++i)
+        {
+            if (trail[i].FaceEffect == DieFaceEffect.Shield)
+            {
+                Destroy(trail[i].gameObject);
+                trail.RemoveAt(i);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private TurnResult WaitingForInput()
     {
         if (queuedMove is Dir qd)
