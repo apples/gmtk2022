@@ -18,3 +18,11 @@ MonoBehaviour:
   roomHeight: 7
   tileDataSet: {fileID: 11400000, guid: ffe94c2dd48f7c74fa08923cb7ab9c43, type: 2}
   exitPrefab: {fileID: 2986628223414302020, guid: 150fb577d5ca3324c82e5570c57d2b13, type: 3}
+  addPerRoomPerLevel: 1
+  spawns:
+  - enemyPrefab: {fileID: 1497414098889592452, guid: 3ef0f06ecc0d5f34394ab5e4a981515a, type: 3}
+    startingDifficulty: 0
+    addWeightPerLevel: 1
+  - enemyPrefab: {fileID: 1497414098889592452, guid: f8d4c22867cd2c845ae1077184fdb676, type: 3}
+    startingDifficulty: 2
+    addWeightPerLevel: 1

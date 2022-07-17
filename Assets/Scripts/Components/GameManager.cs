@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     private bool isGameOver;
     private float gameOverTimer;
 
+    public int Level => level;
+
     void OnEnable()
     {
         onExitReached.onTrigger += this.onExitReached_onTrigger;

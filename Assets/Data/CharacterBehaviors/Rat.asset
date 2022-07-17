@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 956eca6972f3f5c498ac27ec19c8bb28, type: 3}
   m_Name: Rat
   m_EditorClassIdentifier: 
+  playerDetectionRange: 10
+  playerReference: {fileID: 11400000, guid: 90f4228c88620af418b3efe7861df895, type: 2}
   turnSequence: 01000000

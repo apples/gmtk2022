@@ -179,6 +179,10 @@ public class TileGrid : MonoBehaviour
     {
         var obj = Instantiate(prefab, this.transform);
         obj.transform.position = new Vector3(coord.x, 0, coord.y);
+        if (obj.GetComponent<GridPosition>() is GridPosition gp)
+        {
+            gp.Position = coord;
+        }
     }
 
     private (Vector2Int, int) BreakCoords(Vector2Int coord)

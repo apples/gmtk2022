@@ -15,6 +15,10 @@ public class DungeonTileGridGenerator : TileGridGenerator
 
     public GameObject exitPrefab;
 
+    public float addPerRoomPerLevel = 1;
+
+    public List<EnemySpawnConfig> spawns;
+
     public override void Generate(TileGrid tileGrid)
     {
         if (roomWidth < 4 || roomHeight < 4)
@@ -171,10 +175,51 @@ public class DungeonTileGridGenerator : TileGridGenerator
             exitRoom = rooms[Random.Range(0, rooms.Length)];
         }
 
+        playerSpawnRoom.preventEnemy = true;
+        exitRoom.preventEnemy = true;
+
         tileGrid.PlayerSpawnLocation = playerSpawnRoom.start + new Vector2Int(Random.Range(1, roomWidth - 2), Random.Range(1, roomHeight - 2));
         tileGrid.ExitLocation = exitRoom.start + new Vector2Int(Random.Range(1, roomWidth - 2), Random.Range(1, roomHeight - 2));
 
         tileGrid.SpawnThing(exitPrefab, tileGrid.ExitLocation);
+
+        // enemies
+
+        var difficulty = GameManager.Singleton.Level;
+
+        float Weight(EnemySpawnConfig x) => x.startingDifficulty > difficulty ? 0f : (x.addWeightPerLevel * (difficulty - x.startingDifficulty));
+
+        spawns.ForEach(x => x.weight = Weight(x));
+
+        var totalWeight = spawns.Sum(x => x.weight);
+
+        var enemyRooms = rooms.Where(x => !x.preventEnemy).ToList();
+
+        var totalSpawns = addPerRoomPerLevel * difficulty * enemyRooms.Count;
+
+        for (var i = 0; i < totalSpawns; ++i)
+        {
+            var room = enemyRooms[Random.Range(0, enemyRooms.Count)];
+
+            var coord = room.start + new Vector2Int(Random.Range(0, roomWidth - 1), Random.Range(0, roomHeight - 1));
+
+            if (tileGrid.GetOccupant(coord) != null)
+            {
+                break;
+            }
+
+            var roll = Random.Range(0f, totalWeight);
+
+            int idx = 0;
+
+            while (roll >= spawns[idx].weight && idx < spawns.Count - 1)
+            {
+                roll -= spawns[idx].weight;
+                ++idx;
+            }
+
+            tileGrid.SpawnThing(spawns[idx].enemyPrefab, coord);
+        }
 
         // disjoint sets
 
@@ -235,6 +280,7 @@ public class DungeonTileGridGenerator : TileGridGenerator
         public int index;
         public int parent;
         public List<Wall> walls = new List<Wall>(4);
+        public bool preventEnemy;
     }
 
     private class Wall
@@ -243,5 +289,16 @@ public class DungeonTileGridGenerator : TileGridGenerator
         public Room room2;
         public bool WE;
         public bool open;
+    }
+
+    [System.Serializable]
+    public class EnemySpawnConfig
+    {
+        public GameObject enemyPrefab;
+        public int startingDifficulty;
+        public float addWeightPerLevel;
+
+        [System.NonSerialized]
+        public float weight;
     }
 }

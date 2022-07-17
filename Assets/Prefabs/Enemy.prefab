@@ -246,7 +246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 0
-  speed: 10
+  speed: 20
   isDie: 0
   dieFaces: []
   diePivot: {fileID: 0}
@@ -267,6 +267,7 @@ MonoBehaviour:
   characterControllerList: {fileID: 11400000, guid: 29388d9115467b84ca0038fab1257267, type: 2}
   characterBehaviorData: {fileID: 11400000, guid: 7bb17b2cd8d47c542a88cd440752ccf5, type: 2}
   enemySprite: {fileID: 6607950631266817807}
+  playerReference: {fileID: 11400000, guid: 90f4228c88620af418b3efe7861df895, type: 2}
   tileGridReference: {fileID: 11400000, guid: 078dab54d9cc2a14496ca2a2930740d2, type: 2}
 --- !u!114 &6342297418857238409
 MonoBehaviour:

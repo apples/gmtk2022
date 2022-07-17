@@ -16,6 +16,10 @@ PrefabInstance:
       propertyPath: maxHealth
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6607950631266817793, guid: d3a49088c4df4ad4789557f14aac51e1, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 04ec770c33d8b264e904a152c406a60c, type: 3}
     - target: {fileID: 6607950631546995208, guid: d3a49088c4df4ad4789557f14aac51e1, type: 3}
       propertyPath: characterBehaviorData
       value: 

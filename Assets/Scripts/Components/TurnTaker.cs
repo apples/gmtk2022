@@ -10,6 +10,8 @@ public class TurnTaker : MonoBehaviour
     public CharacterBehaviorData characterBehaviorData;
     public GameObject enemySprite;
 
+    public GameObjectReference playerReference;
+
     [SerializeField]
     private TileGridReference tileGridReference;
 
@@ -43,7 +45,29 @@ public class TurnTaker : MonoBehaviour
     }
 
     public void BeginTurn() => behavior.BeginTurn();
-    public TurnResult PerformTurn() => behavior.PerformTurn();
+
+    public TurnResult PerformTurn()
+    {
+        if (behavior is GenericEnemyCharacterBehavior geb)
+        {
+            if (playerReference == null || playerReference.Current == null)
+            {
+                return behavior.PerformTurn();
+            }
+
+            var playerCoord = playerReference.Current.GetComponent<GridPosition>().Position;
+            var myCoord = gridPosition.Position;
+
+            var dist = Vector2Int.Distance(playerCoord, myCoord);
+
+            if (dist > geb.Data.playerDetectionRange)
+            {
+                return TurnResult.EndTurn;
+            }
+        }
+
+        return behavior.PerformTurn();
+    }
 
     public void AttackAnimationDone(EnemyAttack attack)
     {
