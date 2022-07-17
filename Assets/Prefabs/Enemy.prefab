@@ -112,6 +112,7 @@ GameObject:
   - component: {fileID: 6607950631546995208}
   - component: {fileID: 6342297418857238409}
   - component: {fileID: 2990887595274117371}
+  - component: {fileID: 6468718261297706459}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -134,7 +135,7 @@ Transform:
   - {fileID: 6607950631266817792}
   - {fileID: 3773241288461718665}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6607950631546995318
 MonoBehaviour:
@@ -212,6 +213,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6468718261297706459}
+        m_TargetAssemblyTypeName: Poofify, Assembly-CSharp
+        m_MethodName: CheckHealth
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2990887595274117371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,6 +242,19 @@ MonoBehaviour:
   heartPrefab: {fileID: 6388920005540719159, guid: 658aae27573deb4439ab8d3ac0cb46f2, type: 3}
   heartSpacing: 0.3125
   heartOrigin: {fileID: 3773241288461718665}
+--- !u!114 &6468718261297706459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6607950631546995316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6d025b08ce44f7459e8a4244c7aa870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poofPrefab: {fileID: 1230471472276323889, guid: 31614e19b90ece645a85605c30f12f5b, type: 3}
 --- !u!1 &7360292399978008687
 GameObject:
   m_ObjectHideFlags: 0
