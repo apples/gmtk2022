@@ -4,20 +4,35 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform following;
     public float distance;
     public float smoothing = 10f;
+    public float teleportDistance = 10f;
+
+    public GameObjectReference targetReference;
 
     void Start()
     {
-        this.transform.position = following.position - this.transform.forward * distance;
+        if (targetReference != null && targetReference.Current != null)
+        {
+            this.transform.position = targetReference.Current.transform.position - this.transform.forward * distance;
+        }
     }
 
     void Update()
     {
-        var idealPosition = following.position - this.transform.forward * distance;
+        if (targetReference != null && targetReference.Current != null)
+        {
+            var idealPosition = targetReference.Current.transform.position - this.transform.forward * distance;
 
-        this.transform.position = Damp(this.transform.position, idealPosition, smoothing, Time.deltaTime);
+            if (Vector3.Distance(idealPosition, this.transform.position) > teleportDistance)
+            {
+                this.transform.position = idealPosition;
+            }
+            else
+            {
+                this.transform.position = Damp(this.transform.position, idealPosition, smoothing, Time.deltaTime);
+            }
+        }
     }
 
     private Vector3 Damp(Vector3 a, Vector3 b, float lambda, float dt)

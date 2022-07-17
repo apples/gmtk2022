@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff3683117f26e7b44b8bb55b387c6a87, type: 3}
   m_Name: DungeonTileGridGenerator
   m_EditorClassIdentifier: 
-  width: 8
-  height: 6
+  width: 5
+  height: 4
   roomWidth: 10
   roomHeight: 7
   tileDataSet: {fileID: 11400000, guid: ffe94c2dd48f7c74fa08923cb7ab9c43, type: 2}
+  exitPrefab: {fileID: 2986628223414302020, guid: 150fb577d5ca3324c82e5570c57d2b13, type: 3}

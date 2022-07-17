@@ -13,8 +13,15 @@ public class DungeonTileGridGenerator : TileGridGenerator
 
     public TileDataSet tileDataSet;
 
+    public GameObject exitPrefab;
+
     public override void Generate(TileGrid tileGrid)
     {
+        if (roomWidth < 4 || roomHeight < 4)
+        {
+            throw new System.InvalidOperationException("Room size too small!");
+        }
+
         var rooms = new Room[width * height];
 
         for (int x = 0; x < width; ++x)
@@ -154,6 +161,22 @@ public class DungeonTileGridGenerator : TileGridGenerator
                 tileGrid.SetTileData(coord, tileDataSet.wall);
             }
         }
+
+        // spawns
+
+        var playerSpawnRoom = rooms[Random.Range(0, rooms.Length)];
+        var exitRoom = rooms[Random.Range(0, rooms.Length)];
+        while (exitRoom == playerSpawnRoom)
+        {
+            exitRoom = rooms[Random.Range(0, rooms.Length)];
+        }
+
+        tileGrid.PlayerSpawnLocation = playerSpawnRoom.start + new Vector2Int(Random.Range(1, roomWidth - 2), Random.Range(1, roomHeight - 2));
+        tileGrid.ExitLocation = exitRoom.start + new Vector2Int(Random.Range(1, roomWidth - 2), Random.Range(1, roomHeight - 2));
+
+        tileGrid.SpawnThing(exitPrefab, tileGrid.ExitLocation);
+
+        // disjoint sets
 
         int FindRoot(int i)
         {

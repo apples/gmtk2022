@@ -14,6 +14,9 @@ public class TileGrid : MonoBehaviour
 
     private Dictionary<Vector2Int, TileChunk> chunks = new Dictionary<Vector2Int, TileChunk>();
 
+    public Vector2Int PlayerSpawnLocation { get; set; }
+    public Vector2Int ExitLocation { get; set; }
+
     void OnEnable()
     {
         if (tileGridReference != null)
@@ -32,7 +35,7 @@ public class TileGrid : MonoBehaviour
         }
     }
 
-    void Start()
+    public void Generate()
     {
         generator.Generate(this);
     }
@@ -128,7 +131,7 @@ public class TileGrid : MonoBehaviour
         {
             chunk.tiles[index].occupant = gridPosition;
         }
-        else
+        else if (chunk.tiles[index].occupant != gridPosition)
         {
             Debug.LogError($"Multiple occupants at {gridPosition.Position}");
         }
@@ -170,6 +173,12 @@ public class TileGrid : MonoBehaviour
     public bool IsTileEmpty(Vector2Int coord)
     {
         return IsTileEmpty(coord, out var occupant);
+    }
+
+    public void SpawnThing(GameObject prefab, Vector2Int coord)
+    {
+        var obj = Instantiate(prefab, this.transform);
+        obj.transform.position = new Vector3(coord.x, 0, coord.y);
     }
 
     private (Vector2Int, int) BreakCoords(Vector2Int coord)

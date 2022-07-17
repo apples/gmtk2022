@@ -8,6 +8,8 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour, ICharacterBehavior
 {
     public TileGridReference tileGridReference;
+    public GameObjectReference gameObjectReference;
+    public VoidEvent onExitReached;
 
     public DieData dieData;
 
@@ -90,11 +92,23 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
     void OnEnable()
     {
         controls.Enable();
+
+        if (gameObjectReference != null)
+        {
+            Debug.Assert(gameObjectReference.Current == null);
+            gameObjectReference.Current = this.gameObject;
+        }
     }
 
     void OnDisable()
     {
         controls.Disable();
+
+        if (gameObjectReference != null)
+        {
+            Debug.Assert(gameObjectReference.Current == this.gameObject);
+            gameObjectReference.Current = null;
+        }
     }
 
     void Update()
@@ -322,10 +336,22 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
         if (syncGridPosition == null || syncGridPosition.Done)
         {
             UpdateTrail();
+
+            if (gridPosition.Position == tileGridReference.Current.ExitLocation)
+            {
+                ExitReached();
+            }
+
             return TurnResult.EndTurn;
         }
 
         return TurnResult.Wait;
+    }
+
+    private void ExitReached()
+    {
+        DestroyTrail();
+        onExitReached.Trigger();
     }
 
     private TurnResult Attacking()
