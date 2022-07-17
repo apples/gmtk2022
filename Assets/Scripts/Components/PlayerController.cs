@@ -11,6 +11,12 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
     public GameObjectReference gameObjectReference;
     public VoidEvent onExitReached;
 
+    public AudioSource hitSound;
+    public AudioSource bounceSound;
+    public AudioSource stepSound;
+    public AudioSource winSound;
+    public AudioSource loseSound;
+
     public DieData dieData;
 
     [SerializeField]
@@ -222,6 +228,7 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
         {
             DestroyTrail();
             GetComponent<Poofify>().Poof();
+            loseSound.Play();
             GameManager.Singleton.StartGameOverTimer();
         }
     }
@@ -309,6 +316,11 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
                 if (stats.attack > 0)
                 {
                     occupantHealth.CurrentHealth -= stats.attack;
+                    hitSound.Play();
+                }
+                else
+                {
+                    bounceSound.Play();
                 }
             }
 
@@ -364,7 +376,12 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
 
             if (gridPosition.Position == tileGridReference.Current.ExitLocation)
             {
+                winSound.Play();
                 ExitReached();
+            }
+            else
+            {
+                stepSound.Play();
             }
 
             return TurnResult.EndTurn;

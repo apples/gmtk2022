@@ -12,6 +12,9 @@ public class TurnTaker : MonoBehaviour
 
     public GameObjectReference playerReference;
 
+    public AudioSource hitSound;
+    public AudioSource bounceSound;
+
     [SerializeField]
     private TileGridReference tileGridReference;
 

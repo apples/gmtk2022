@@ -147,11 +147,17 @@ public class GenericEnemyCharacterBehavior : CharacterBehavior
             if (!pc.ConsumeShield())
             {
                 attackTarget.GetComponent<Health>().CurrentHealth -= 1;
+                Controller.hitSound.Play();
+            }
+            else
+            {
+                Controller.bounceSound.Play();
             }
         }
         else
         {
             attackTarget.GetComponent<Health>().CurrentHealth -= 1;
+            Controller.hitSound.Play();
         }
 
         return TurnResult.EndTurn;
