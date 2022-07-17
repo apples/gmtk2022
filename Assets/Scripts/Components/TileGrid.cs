@@ -16,14 +16,20 @@ public class TileGrid : MonoBehaviour
 
     void OnEnable()
     {
-        Debug.Assert(tileGridReference.Current == null);
-        tileGridReference.Current = this;
+        if (tileGridReference != null)
+        {
+            Debug.Assert(tileGridReference.Current == null);
+            tileGridReference.Current = this;
+        }
     }
 
     void OnDisable()
     {
-        Debug.Assert(tileGridReference.Current == this);
-        tileGridReference.Current = null;
+        if (tileGridReference != null)
+        {
+            Debug.Assert(tileGridReference.Current == this);
+            tileGridReference.Current = null;
+        }
     }
 
     void Start()
