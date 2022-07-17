@@ -40,6 +40,33 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SpinCW",
+                    "type": "Button",
+                    "id": "e7203de1-4a7f-4ea2-9f8d-bacd6c68e0ad",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SpinModifier",
+                    "type": "Button",
+                    "id": "0c2bcb2f-8098-49f1-8558-a22d6d008142",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SpinCCW",
+                    "type": "Button",
+                    "id": "0a298f77-2a5a-4a67-a581-f58d27c0d472",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -47,6 +74,17 @@
                     "name": "",
                     "id": "3de7bb3e-e3fb-4e5d-a2b2-8847e2f8c9e0",
                     "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c45f275d-6022-401e-a836-fe8486a40c6a",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -67,8 +105,30 @@
                 },
                 {
                     "name": "",
+                    "id": "84fbd3b7-7e06-4bc2-8bbe-8c8930ef8657",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "7ec318f7-0f58-4c67-87af-ee3b0ce94cdf",
                     "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "152c699d-713d-443a-88aa-112f489308da",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -84,6 +144,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "MoveDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "04285f19-393b-4dc5-92c7-b4a4a52ca636",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "53bc9bb7-a822-47c9-aa44-c53712e5c5f7",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpinCW",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e9862c72-ed20-4179-be38-32987063c3a5",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpinModifier",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "29732678-4b0e-425a-8b38-9baca99eb4a3",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpinCCW",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

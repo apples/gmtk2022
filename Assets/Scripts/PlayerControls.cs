@@ -62,6 +62,33 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpinCW"",
+                    ""type"": ""Button"",
+                    ""id"": ""e7203de1-4a7f-4ea2-9f8d-bacd6c68e0ad"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpinModifier"",
+                    ""type"": ""Button"",
+                    ""id"": ""0c2bcb2f-8098-49f1-8558-a22d6d008142"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpinCCW"",
+                    ""type"": ""Button"",
+                    ""id"": ""0a298f77-2a5a-4a67-a581-f58d27c0d472"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -69,6 +96,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""3de7bb3e-e3fb-4e5d-a2b2-8847e2f8c9e0"",
                     ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c45f275d-6022-401e-a836-fe8486a40c6a"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -89,8 +127,30 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""84fbd3b7-7e06-4bc2-8bbe-8c8930ef8657"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""7ec318f7-0f58-4c67-87af-ee3b0ce94cdf"",
                     ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""152c699d-713d-443a-88aa-112f489308da"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -108,6 +168,50 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""MoveDown"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""04285f19-393b-4dc5-92c7-b4a4a52ca636"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""53bc9bb7-a822-47c9-aa44-c53712e5c5f7"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpinCW"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e9862c72-ed20-4179-be38-32987063c3a5"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpinModifier"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""29732678-4b0e-425a-8b38-9baca99eb4a3"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpinCCW"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -120,6 +224,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_PlayerDice_MoveRight = m_PlayerDice.FindAction("MoveRight", throwIfNotFound: true);
         m_PlayerDice_MoveUp = m_PlayerDice.FindAction("MoveUp", throwIfNotFound: true);
         m_PlayerDice_MoveDown = m_PlayerDice.FindAction("MoveDown", throwIfNotFound: true);
+        m_PlayerDice_SpinCW = m_PlayerDice.FindAction("SpinCW", throwIfNotFound: true);
+        m_PlayerDice_SpinModifier = m_PlayerDice.FindAction("SpinModifier", throwIfNotFound: true);
+        m_PlayerDice_SpinCCW = m_PlayerDice.FindAction("SpinCCW", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -183,6 +290,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerDice_MoveRight;
     private readonly InputAction m_PlayerDice_MoveUp;
     private readonly InputAction m_PlayerDice_MoveDown;
+    private readonly InputAction m_PlayerDice_SpinCW;
+    private readonly InputAction m_PlayerDice_SpinModifier;
+    private readonly InputAction m_PlayerDice_SpinCCW;
     public struct PlayerDiceActions
     {
         private @PlayerControls m_Wrapper;
@@ -191,6 +301,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @MoveRight => m_Wrapper.m_PlayerDice_MoveRight;
         public InputAction @MoveUp => m_Wrapper.m_PlayerDice_MoveUp;
         public InputAction @MoveDown => m_Wrapper.m_PlayerDice_MoveDown;
+        public InputAction @SpinCW => m_Wrapper.m_PlayerDice_SpinCW;
+        public InputAction @SpinModifier => m_Wrapper.m_PlayerDice_SpinModifier;
+        public InputAction @SpinCCW => m_Wrapper.m_PlayerDice_SpinCCW;
         public InputActionMap Get() { return m_Wrapper.m_PlayerDice; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -212,6 +325,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @MoveDown.started -= m_Wrapper.m_PlayerDiceActionsCallbackInterface.OnMoveDown;
                 @MoveDown.performed -= m_Wrapper.m_PlayerDiceActionsCallbackInterface.OnMoveDown;
                 @MoveDown.canceled -= m_Wrapper.m_PlayerDiceActionsCallbackInterface.OnMoveDown;
+                @SpinCW.started -= m_Wrapper.m_PlayerDiceActionsCallbackInterface.OnSpinCW;
+                @SpinCW.performed -= m_Wrapper.m_PlayerDiceActionsCallbackInterface.OnSpinCW;
+                @SpinCW.canceled -= m_Wrapper.m_PlayerDiceActionsCallbackInterface.OnSpinCW;
+                @SpinModifier.started -= m_Wrapper.m_PlayerDiceActionsCallbackInterface.OnSpinModifier;
+                @SpinModifier.performed -= m_Wrapper.m_PlayerDiceActionsCallbackInterface.OnSpinModifier;
+                @SpinModifier.canceled -= m_Wrapper.m_PlayerDiceActionsCallbackInterface.OnSpinModifier;
+                @SpinCCW.started -= m_Wrapper.m_PlayerDiceActionsCallbackInterface.OnSpinCCW;
+                @SpinCCW.performed -= m_Wrapper.m_PlayerDiceActionsCallbackInterface.OnSpinCCW;
+                @SpinCCW.canceled -= m_Wrapper.m_PlayerDiceActionsCallbackInterface.OnSpinCCW;
             }
             m_Wrapper.m_PlayerDiceActionsCallbackInterface = instance;
             if (instance != null)
@@ -228,6 +350,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @MoveDown.started += instance.OnMoveDown;
                 @MoveDown.performed += instance.OnMoveDown;
                 @MoveDown.canceled += instance.OnMoveDown;
+                @SpinCW.started += instance.OnSpinCW;
+                @SpinCW.performed += instance.OnSpinCW;
+                @SpinCW.canceled += instance.OnSpinCW;
+                @SpinModifier.started += instance.OnSpinModifier;
+                @SpinModifier.performed += instance.OnSpinModifier;
+                @SpinModifier.canceled += instance.OnSpinModifier;
+                @SpinCCW.started += instance.OnSpinCCW;
+                @SpinCCW.performed += instance.OnSpinCCW;
+                @SpinCCW.canceled += instance.OnSpinCCW;
             }
         }
     }
@@ -238,5 +369,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnMoveRight(InputAction.CallbackContext context);
         void OnMoveUp(InputAction.CallbackContext context);
         void OnMoveDown(InputAction.CallbackContext context);
+        void OnSpinCW(InputAction.CallbackContext context);
+        void OnSpinModifier(InputAction.CallbackContext context);
+        void OnSpinCCW(InputAction.CallbackContext context);
     }
 }

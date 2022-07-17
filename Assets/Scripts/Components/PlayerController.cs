@@ -17,19 +17,23 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
     [SerializeField]
     private GameObject trailingFacePrefab;
 
+    [SerializeField]
+    private GameObject diePivot;
+
     private PlayerControls controls;
 
     private GridPosition gridPosition;
     private SyncGridPosition syncGridPosition;
     private DieAttackSwing dieAttackSwing;
 
-    private Vector2Int? queuedMove;
+    private Dir? queuedMove;
 
     private enum Status
     {
         WaitingForInput,
         Moving,
         Attacking,
+        WaitingForSpin,
     }
 
     private Status status;
@@ -38,6 +42,8 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
 
     private List<TrailingFace> trail = new List<TrailingFace>(6);
     private List<Vector2Int> trailMoves = new List<Vector2Int>(6);
+
+    private bool isSpinAnimationDone = false;
 
     void Awake()
     {
@@ -51,10 +57,16 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
         controls.PlayerDice.MoveLeft.performed += this.controls_PlayerDice_MoveLeft_performed;
         controls.PlayerDice.MoveRight.performed += this.controls_PlayerDice_MoveRight_performed;
 
+        controls.PlayerDice.SpinCW.performed += this.controls_PlayerDice_SpinCW_performed;
+        controls.PlayerDice.SpinCCW.performed += this.controls_PlayerDice_SpinCCW_performed;
+
         controls.PlayerDice.MoveUp.canceled += this.controls_PlayerDice_MoveUp_canceled;
         controls.PlayerDice.MoveDown.canceled += this.controls_PlayerDice_MoveDown_canceled;
         controls.PlayerDice.MoveLeft.canceled += this.controls_PlayerDice_MoveLeft_canceled;
         controls.PlayerDice.MoveRight.canceled += this.controls_PlayerDice_MoveRight_canceled;
+
+        controls.PlayerDice.SpinCW.canceled += this.controls_PlayerDice_SpinCW_canceled;
+        controls.PlayerDice.SpinCCW.canceled += this.controls_PlayerDice_SpinCCW_canceled;
 
         dieState = new DieState(dieData);
 
@@ -89,22 +101,60 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
     {
     }
 
-    private void controls_PlayerDice_MoveLeft_performed(InputAction.CallbackContext obj) => Move(Vector2Int.left);
-    private void controls_PlayerDice_MoveRight_performed(InputAction.CallbackContext obj) => Move(Vector2Int.right);
-    private void controls_PlayerDice_MoveUp_performed(InputAction.CallbackContext obj) => Move(Vector2Int.up);
-    private void controls_PlayerDice_MoveDown_performed(InputAction.CallbackContext obj) => Move(Vector2Int.down);
+    private void controls_PlayerDice_MoveLeft_performed(InputAction.CallbackContext obj)
+    {
+        if (controls.PlayerDice.SpinModifier.IsPressed())
+        {
+            Move(Dir.SpinCW);
+        }
+        else
+        {
+            Move(Dir.Left);
+        }
+    }
 
-    private void controls_PlayerDice_MoveLeft_canceled(InputAction.CallbackContext obj) => CancelMove(Vector2Int.left);
-    private void controls_PlayerDice_MoveRight_canceled(InputAction.CallbackContext obj) => CancelMove(Vector2Int.right);
-    private void controls_PlayerDice_MoveUp_canceled(InputAction.CallbackContext obj) => CancelMove(Vector2Int.up);
-    private void controls_PlayerDice_MoveDown_canceled(InputAction.CallbackContext obj) => CancelMove(Vector2Int.down);
+    private void controls_PlayerDice_MoveRight_performed(InputAction.CallbackContext obj)
+    {
+        if (controls.PlayerDice.SpinModifier.IsPressed())
+        {
+            Move(Dir.SpinCCW);
+        }
+        else
+        {
+            Move(Dir.Right);
+        }
+    }
 
-    private void Move(Vector2Int dir)
+    private void controls_PlayerDice_MoveUp_performed(InputAction.CallbackContext obj) => Move(Dir.Up);
+    private void controls_PlayerDice_MoveDown_performed(InputAction.CallbackContext obj) => Move(Dir.Down);
+
+    private void controls_PlayerDice_SpinCW_performed(InputAction.CallbackContext obj) => Move(Dir.SpinCW);
+    private void controls_PlayerDice_SpinCCW_performed(InputAction.CallbackContext obj) => Move(Dir.SpinCCW);
+
+    private void controls_PlayerDice_MoveLeft_canceled(InputAction.CallbackContext obj)
+    {
+        CancelMove(Dir.Left);
+        CancelMove(Dir.SpinCW);
+    }
+
+    private void controls_PlayerDice_MoveRight_canceled(InputAction.CallbackContext obj)
+    {
+        CancelMove(Dir.Right);
+        CancelMove(Dir.SpinCCW);
+    }
+
+    private void controls_PlayerDice_MoveUp_canceled(InputAction.CallbackContext obj) => CancelMove(Dir.Up);
+    private void controls_PlayerDice_MoveDown_canceled(InputAction.CallbackContext obj) => CancelMove(Dir.Down);
+
+    private void controls_PlayerDice_SpinCW_canceled(InputAction.CallbackContext obj) => CancelMove(Dir.SpinCW);
+    private void controls_PlayerDice_SpinCCW_canceled(InputAction.CallbackContext obj) => CancelMove(Dir.SpinCCW);
+
+    private void Move(Dir dir)
     {
         queuedMove = dir;
     }
 
-    private void CancelMove(Vector2Int dir)
+    private void CancelMove(Dir dir)
     {
         if (queuedMove == dir)
         {
@@ -119,63 +169,113 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
 
     public TurnResult PerformTurn()
     {
-        switch (status)
+        return status switch
         {
-            case Status.WaitingForInput:
-                return WaitingForInput();
-            case Status.Moving:
-                return Moving();
-            case Status.Attacking:
-                return Attacking();
-            default:
-                throw new InvalidOperationException($"Unknown status {status}");
+            Status.WaitingForInput => WaitingForInput(),
+            Status.Moving => Moving(),
+            Status.Attacking => Attacking(),
+            Status.WaitingForSpin => WaitingForSpin(),
+            _ => throw new NotImplementedException($"Unknown status {status}"),
+        };
+    }
+
+    private TurnResult WaitingForSpin()
+    {
+        if (isSpinAnimationDone)
+        {
+            foreach (var fmr in faceMeshRenderers)
+            {
+                fmr.transform.SetParent(this.transform, true);
+            }
+
+            diePivot.GetComponent<Animator>().enabled = false;
+            diePivot.transform.eulerAngles = Vector3.zero;
+
+            return TurnResult.EndTurn;
         }
+
+        return TurnResult.Wait;
+    }
+
+    public void SetSpinAnimationDone()
+    {
+        isSpinAnimationDone = true;
     }
 
     private TurnResult WaitingForInput()
     {
-        if (queuedMove is Vector2Int qm)
+        if (queuedMove is Dir qd)
         {
-            if (trail.Count != 0)
+            return qd switch
             {
-                trailMoves.Add(qm);
-            }
-            queuedMove = null;
+                Dir.Left => WaitingForInput_Move(qd, Vector2Int.left),
+                Dir.Right => WaitingForInput_Move(qd, Vector2Int.right),
+                Dir.Up => WaitingForInput_Move(qd, Vector2Int.up),
+                Dir.Down => WaitingForInput_Move(qd, Vector2Int.down),
+                Dir.SpinCW => WaitingForInput_Spin(qd),
+                Dir.SpinCCW => WaitingForInput_Spin(qd),
+                _ => throw new NotImplementedException(),
+            };
+        }
 
-            var newPos = gridPosition.Position + qm;
+        return TurnResult.Wait;
+    }
 
-            if (tileGridReference.Current.IsTileEmpty(newPos, out var occupant))
+    private TurnResult WaitingForInput_Spin(Dir dir)
+    {
+        var animName = dir == Dir.SpinCW ? "Base Layer.PlayerDieSpinCW" : "Base Layer.PlayerDieSpinCCW";
+
+        diePivot.transform.localPosition = Vector3.zero;
+        diePivot.transform.localEulerAngles = Vector3.zero;
+
+        foreach (var fmr in faceMeshRenderers)
+        {
+            fmr.transform.SetParent(diePivot.transform, true);
+        }
+
+        var animator = diePivot.GetComponent<Animator>();
+        animator.enabled = true;
+        animator.Play(animName);
+
+        dieState.Spin(dir);
+
+        isSpinAnimationDone = false;
+        status = Status.WaitingForSpin;
+
+        return TurnResult.Wait;
+    }
+
+    private TurnResult WaitingForInput_Move(Dir dir, Vector2Int qm)
+    {
+        if (trail.Count != 0)
+        {
+            trailMoves.Add(qm);
+        }
+        queuedMove = null;
+
+        var newPos = gridPosition.Position + qm;
+
+        if (tileGridReference.Current.IsTileEmpty(newPos, out var occupant))
+        {
+            gridPosition.Position = newPos;
+            status = Status.Moving;
+
+            dieState.Spin(dir);
+        }
+
+        if (occupant != null && occupant.GetComponent<Health>() is Health occupantHealth)
+        {
+            if (ConsumeTrail(out var stats))
             {
-                gridPosition.Position = newPos;
-                status = Status.Moving;
-
-                Dir? dir =
-                    qm == Vector2Int.up ? Dir.Up :
-                    qm == Vector2Int.right ? Dir.Right :
-                    qm == Vector2Int.down ? Dir.Down :
-                    qm == Vector2Int.left ? Dir.Left :
-                    null;
-
-                if (dir is Dir d)
+                if (stats.attack > 0)
                 {
-                    dieState.Spin(d);
+                    occupantHealth.CurrentHealth -= stats.attack;
                 }
             }
 
-            if (occupant != null && occupant.GetComponent<Health>() is Health occupantHealth)
-            {
-                if (ConsumeTrail(out var stats))
-                {
-                    if (stats.attack > 0)
-                    {
-                        occupantHealth.CurrentHealth -= stats.attack;
-                    }
-                }
+            dieAttackSwing.Play(qm);
 
-                dieAttackSwing.Play(qm);
-
-                status = Status.Attacking;
-            }
+            status = Status.Attacking;
         }
 
         return TurnResult.Wait;

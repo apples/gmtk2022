@@ -53,6 +53,18 @@ public class DieState
                 loop[1] = 3;
                 loop[3] = 2;
                 break;
+            case Dir.SpinCW:
+                loop[0] = 1;
+                loop[1] = 3;
+                loop[2] = 4;
+                loop[3] = 2;
+                break;
+            case Dir.SpinCCW:
+                loop[0] = 1;
+                loop[1] = 2;
+                loop[2] = 4;
+                loop[3] = 3;
+                break;
             default:
                 throw new InvalidOperationException($"Unkown dir {dir}");
         }

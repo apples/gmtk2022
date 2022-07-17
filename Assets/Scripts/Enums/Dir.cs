@@ -5,4 +5,6 @@ public enum Dir
     Right = 1,
     Down = 2,
     Left = 3,
+    SpinCW = 4,
+    SpinCCW = 5,
 }

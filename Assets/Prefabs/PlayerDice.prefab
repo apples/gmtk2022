@@ -188,6 +188,7 @@ MonoBehaviour:
   - {fileID: 47081004725674951}
   - {fileID: 2624852783999469234}
   trailingFacePrefab: {fileID: 3049802712929783120, guid: 7a12fe5b9d8a05947915fb4f242a0773, type: 3}
+  diePivot: {fileID: 4542962767553674169}
 --- !u!114 &8612776083894271701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,6 +318,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6456971878369739554}
+  - component: {fileID: 7440486525456056758}
+  - component: {fileID: 7760235937922724832}
   m_Layer: 0
   m_Name: DiePivot
   m_TagString: Untagged
@@ -339,6 +342,53 @@ Transform:
   m_Father: {fileID: 1321545015938411868}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &7440486525456056758
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4542962767553674169}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cc658ced84611a6438c3e3d515d887d5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &7760235937922724832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4542962767553674169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fe33e196e8b6f243ade99d8284503c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onAnimationDone:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3818204596547824681}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: SetSpinAnimationDone
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5697214735875002656
 GameObject:
   m_ObjectHideFlags: 0
