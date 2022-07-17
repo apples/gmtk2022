@@ -8,6 +8,7 @@ public class TurnTaker : MonoBehaviour
 {
     public TurnTakerList characterControllerList;
     public CharacterBehaviorData characterBehaviorData;
+    public GameObject enemySprite;
 
     [SerializeField]
     private TileGridReference tileGridReference;
@@ -43,4 +44,12 @@ public class TurnTaker : MonoBehaviour
 
     public void BeginTurn() => behavior.BeginTurn();
     public TurnResult PerformTurn() => behavior.PerformTurn();
+
+    public void AttackAnimationDone(EnemyAttack attack)
+    {
+        if (behavior is GenericEnemyCharacterBehavior geb)
+        {
+            geb.SetAttackAnimationDone();
+        }
+    }
 }

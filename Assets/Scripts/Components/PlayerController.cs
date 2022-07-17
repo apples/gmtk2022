@@ -216,6 +216,16 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
         isSpinAnimationDone = true;
     }
 
+    public void HealthChange(Health health)
+    {
+        if (health.CurrentHealth <= 0)
+        {
+            DestroyTrail();
+            GetComponent<Poofify>().Poof();
+            GameManager.Singleton.StartGameOverTimer();
+        }
+    }
+
     private TurnResult WaitingForInput()
     {
         if (queuedMove is Dir qd)

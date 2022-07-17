@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Singleton { get; set; }
+
     public GameObject playerPrefab;
     public GameObject tileGridPrefab;
     public VoidEvent onExitReached;
@@ -18,6 +20,13 @@ public class GameManager : MonoBehaviour
     void OnEnable()
     {
         onExitReached.onTrigger += this.onExitReached_onTrigger;
+        Singleton = this;
+    }
+
+    void OnDisable()
+    {
+        onExitReached.onTrigger -= this.onExitReached_onTrigger;
+        Singleton = null;
     }
 
     void Start()
@@ -47,5 +56,10 @@ public class GameManager : MonoBehaviour
     {
         Destroy(currentTileGrid.gameObject);
         currentTileGrid = null;
+    }
+
+    public void StartGameOverTimer()
+    {
+        throw new NotImplementedException();
     }
 }

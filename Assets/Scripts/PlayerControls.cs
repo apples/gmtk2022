@@ -89,6 +89,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Accept"",
+                    ""type"": ""Button"",
+                    ""id"": ""ba514682-b537-41ee-b831-88ae3a7b268c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -212,6 +221,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""SpinCCW"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7315015f-1ccb-4ff8-97de-8938788e3919"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Accept"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -227,6 +247,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_PlayerDice_SpinCW = m_PlayerDice.FindAction("SpinCW", throwIfNotFound: true);
         m_PlayerDice_SpinModifier = m_PlayerDice.FindAction("SpinModifier", throwIfNotFound: true);
         m_PlayerDice_SpinCCW = m_PlayerDice.FindAction("SpinCCW", throwIfNotFound: true);
+        m_PlayerDice_Accept = m_PlayerDice.FindAction("Accept", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -293,6 +314,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerDice_SpinCW;
     private readonly InputAction m_PlayerDice_SpinModifier;
     private readonly InputAction m_PlayerDice_SpinCCW;
+    private readonly InputAction m_PlayerDice_Accept;
     public struct PlayerDiceActions
     {
         private @PlayerControls m_Wrapper;
@@ -304,6 +326,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @SpinCW => m_Wrapper.m_PlayerDice_SpinCW;
         public InputAction @SpinModifier => m_Wrapper.m_PlayerDice_SpinModifier;
         public InputAction @SpinCCW => m_Wrapper.m_PlayerDice_SpinCCW;
+        public InputAction @Accept => m_Wrapper.m_PlayerDice_Accept;
         public InputActionMap Get() { return m_Wrapper.m_PlayerDice; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -334,6 +357,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @SpinCCW.started -= m_Wrapper.m_PlayerDiceActionsCallbackInterface.OnSpinCCW;
                 @SpinCCW.performed -= m_Wrapper.m_PlayerDiceActionsCallbackInterface.OnSpinCCW;
                 @SpinCCW.canceled -= m_Wrapper.m_PlayerDiceActionsCallbackInterface.OnSpinCCW;
+                @Accept.started -= m_Wrapper.m_PlayerDiceActionsCallbackInterface.OnAccept;
+                @Accept.performed -= m_Wrapper.m_PlayerDiceActionsCallbackInterface.OnAccept;
+                @Accept.canceled -= m_Wrapper.m_PlayerDiceActionsCallbackInterface.OnAccept;
             }
             m_Wrapper.m_PlayerDiceActionsCallbackInterface = instance;
             if (instance != null)
@@ -359,6 +385,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @SpinCCW.started += instance.OnSpinCCW;
                 @SpinCCW.performed += instance.OnSpinCCW;
                 @SpinCCW.canceled += instance.OnSpinCCW;
+                @Accept.started += instance.OnAccept;
+                @Accept.performed += instance.OnAccept;
+                @Accept.canceled += instance.OnAccept;
             }
         }
     }
@@ -372,5 +401,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnSpinCW(InputAction.CallbackContext context);
         void OnSpinModifier(InputAction.CallbackContext context);
         void OnSpinCCW(InputAction.CallbackContext context);
+        void OnAccept(InputAction.CallbackContext context);
     }
 }

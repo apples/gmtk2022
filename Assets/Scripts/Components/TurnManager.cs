@@ -65,6 +65,7 @@ public class TurnManager : MonoBehaviour
         turnSlots.RemoveAt(turnSlots.FindIndex(x => x.characterController == characterController));
     }
 
+    [Serializable]
     private class TurnSlot
     {
         public TurnTaker characterController;

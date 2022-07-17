@@ -97,6 +97,9 @@ GameObject:
   - component: {fileID: 3818204596547824681}
   - component: {fileID: 8612776083894271701}
   - component: {fileID: 3508665940722423644}
+  - component: {fileID: 4085687112071389447}
+  - component: {fileID: 5344198749710805534}
+  - component: {fileID: 731151147978915230}
   m_Layer: 0
   m_Name: PlayerDice
   m_TagString: Untagged
@@ -205,6 +208,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterControllerList: {fileID: 11400000, guid: 29388d9115467b84ca0038fab1257267, type: 2}
   characterBehaviorData: {fileID: 11400000, guid: 92aa0c5f1e2105e428470f2d90279700, type: 2}
+  enemySprite: {fileID: 0}
   tileGridReference: {fileID: 11400000, guid: 078dab54d9cc2a14496ca2a2930740d2, type: 2}
 --- !u!114 &3508665940722423644
 MonoBehaviour:
@@ -228,6 +232,48 @@ MonoBehaviour:
   - {fileID: 6234571224418714837}
   diePivot: {fileID: 6456971878369739554}
   dieParent: {fileID: 1321545015938411868}
+--- !u!114 &4085687112071389447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321545015938411871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3944b72da62f1f848867552f84579736, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 5
+  onChange:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &5344198749710805534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321545015938411871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88f59a2cdccad5e45b2897fbe8c12284, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+--- !u!114 &731151147978915230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321545015938411871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6d025b08ce44f7459e8a4244c7aa870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poofPrefab: {fileID: 1230471472276323889, guid: 31614e19b90ece645a85605c30f12f5b, type: 3}
 --- !u!1 &3970243222274838494
 GameObject:
   m_ObjectHideFlags: 0
