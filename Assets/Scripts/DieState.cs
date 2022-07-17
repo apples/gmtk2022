@@ -14,7 +14,9 @@ public class DieState
     // Y+, Z+, X+, X-, Z-, Y-
     public int[] faceOrder;
 
-    public FaceState TopFace => faces[faceOrder[0]];
+    public int TopFaceIndex => faceOrder[0];
+
+    public FaceState TopFace => faces[TopFaceIndex];
 
     public DieState(DieData dieData)
     {

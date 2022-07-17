@@ -15,6 +15,10 @@ MonoBehaviour:
   attackTexture: {fileID: 2800000, guid: b62664de850d2fd4395f79726deba50a, type: 3}
   defendTexture: {fileID: 2800000, guid: d991a4febb497e34bb557546066c2352, type: 3}
   missTexture: {fileID: 2800000, guid: 122d145e20285574e8478e55417a6231, type: 3}
+  attackTrailingTexture: {fileID: 2800000, guid: 96274f9fdc3f9b84fb715d56678518e5, type: 3}
+  defendTrailingTexture: {fileID: 2800000, guid: 1ec3c3889510a4b4eaa8bb0a0c1c766e, type: 3}
+  missTrailingTexture: {fileID: 2800000, guid: 01f9394acdf22814aa5339b201371118, type: 3}
+  chargeMode: 0
   faces:
   - effect: 0
   - effect: 0

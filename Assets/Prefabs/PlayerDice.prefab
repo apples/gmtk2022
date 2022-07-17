@@ -186,6 +186,7 @@ MonoBehaviour:
   - {fileID: 6800717946769678003}
   - {fileID: 47081004725674951}
   - {fileID: 2624852783999469234}
+  trailingFacePrefab: {fileID: 3049802712929783120, guid: 7a12fe5b9d8a05947915fb4f242a0773, type: 3}
 --- !u!114 &8612776083894271701
 MonoBehaviour:
   m_ObjectHideFlags: 0

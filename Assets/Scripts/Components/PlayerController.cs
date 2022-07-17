@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
     [SerializeField]
     private List<MeshRenderer> faceMeshRenderers;
 
+    [SerializeField]
+    private GameObject trailingFacePrefab;
+
     private PlayerControls controls;
 
     private GridPosition gridPosition;
@@ -30,6 +33,9 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
     private Status status;
 
     private DieState dieState;
+
+    private List<TrailingFace> trail = new List<TrailingFace>(6);
+    private List<Vector2Int> trailMoves = new List<Vector2Int>(6);
 
     void Awake()
     {
@@ -124,8 +130,13 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
     {
         if (queuedMove is Vector2Int qm)
         {
-            var newPos = gridPosition.Position + qm;
+            if (trail.Count != 0)
+            {
+                trailMoves.Add(qm);
+            }
             queuedMove = null;
+
+            var newPos = gridPosition.Position + qm;
 
             if (tileGridReference.Current.IsTileEmpty(newPos))
             {
@@ -153,9 +164,110 @@ public class PlayerController : MonoBehaviour, ICharacterBehavior
     {
         if (syncGridPosition == null || syncGridPosition.Done)
         {
+            UpdateTrail();
             return TurnResult.EndTurn;
         }
 
         return TurnResult.Wait;
+    }
+
+    private void UpdateTrail()
+    {
+        AddTrail();
+
+        // validate
+
+        var isValid = dieData.chargeMode switch
+        {
+            DieChargeMode.Linear => ValidateLinearTrail(),
+            _ => throw new NotImplementedException(),
+        };
+
+        if (!isValid)
+        {
+            for (var i = 0; i < trail.Count - 1; ++i)
+            {
+                Destroy(trail[i].gameObject);
+            }
+            trail.RemoveRange(0, trail.Count - 1);
+            trailMoves.Clear();
+        }
+
+        // miss
+
+        if (trail[trail.Count - 1].FaceEffect == DieFaceEffect.Miss)
+        {
+            foreach (var trailingFace in trail)
+            {
+                Destroy(trailingFace.gameObject);
+            }
+            trail.Clear();
+            trailMoves.Clear();
+        }
+    }
+
+    private void AddTrail()
+    {
+        var overlap = trail.Find(x => x.Position == gridPosition.Position);
+
+        var previous = trail.FindIndex(x => x.FaceIndex == dieState.TopFaceIndex);
+
+        if (overlap == null)
+        {
+            if (previous >= 0)
+            {
+                Destroy(trail[previous].gameObject);
+                trail.RemoveAt(previous);
+            }
+
+            var trailingFaceObj = Instantiate(trailingFacePrefab);
+            trailingFaceObj.transform.position = this.transform.position;
+
+            var trailingFace = trailingFaceObj.GetComponent<TrailingFace>();
+
+            trailingFace.dieData = dieData;
+            trailingFace.FaceIndex = dieState.TopFaceIndex;
+            trailingFace.Position = gridPosition.Position;
+
+            trail.Add(trailingFace);
+        }
+        else
+        {
+            if (previous < 0 || overlap != trail[previous])
+            {
+                if (previous >= 0)
+                {
+                    Destroy(trail[previous].gameObject);
+                    trail.RemoveAt(previous);
+                }
+
+                overlap.FaceIndex = dieState.TopFaceIndex;
+                overlap.Position = gridPosition.Position;
+
+                trail.Remove(overlap);
+                trail.Add(overlap);
+            }
+        }
+    }
+
+    private bool ValidateLinearTrail()
+    {
+        if (trailMoves.Count < 2) return true;
+
+        var step = trailMoves[0];
+
+        var zeroComponent = step[0] == 0 ? 0 : 1;
+
+        for (var i = 1; i < trailMoves.Count; ++i)
+        {
+            var nextStep = trailMoves[i];
+
+            if (nextStep[zeroComponent] != 0)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
